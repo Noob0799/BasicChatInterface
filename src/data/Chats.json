@@ -1,0 +1,74 @@
+[
+    {
+        "id": "c1",
+        "entityId": "u1",
+        "entityType": "USER",
+        "name": "Bruce Wayne",
+        "latestMessageTimeStamp": 1750782837191,
+        "messages": [
+            {
+                "content": "Hi",
+                "sentBy": "Bruce Wayne",
+                "timeStamp": 1750782837189
+            },
+            {
+                "content": "Hi. Who's this ?",
+                "sentBy": "Sayantan Roy",
+                "timeStamp": 1750782837190
+            },
+            {
+                "content": "I am the Dark Knight. The Batman. Don't tell anyone!!!",
+                "sentBy": "Bruce Wayne",
+                "timeStamp": 1750782837191
+            }
+        ]
+    },
+    {
+        "id": "c2",
+        "entityId": "u3",
+        "entityType": "USER",
+        "name": "Bary Allen",
+        "latestMessageTimeStamp": 1750782837194,
+        "messages": [
+            {
+                "content": "Hi",
+                "sentBy": "Bary Allen",
+                "timeStamp": 1750782837192
+            },
+            {
+                "content": "Hi. Who's this ?",
+                "sentBy": "Sayantan Roy",
+                "timeStamp": 1750782837193
+            },
+            {
+                "content": "I am the fastest man alive. The Flash. Dont't tell anyone!!!!",
+                "sentBy": "Bary Allen",
+                "timeStamp": 1750782837194
+            }
+        ]
+    },
+    {
+        "id": "c3",
+        "entityId": "u5",
+        "entityType": "USER",
+        "name": "Tony Stark",
+        "latestMessageTimeStamp": 1750782837197,
+        "messages": [
+            {
+                "content": "Hi. Who are you ?",
+                "sentBy": "Sayantan Roy",
+                "timeStamp": 1750782837195
+            },
+            {
+                "content": "Are you kidding me ?",
+                "sentBy": "Tony Stark",
+                "timeStamp": 1750782837196
+            },
+            {
+                "content": "I am a billionaire, playboy, philanthropist. The Ironman. Everybody knows!!!!",
+                "sentBy": "Tony Stark",
+                "timeStamp": 1750782837197
+            }
+        ]
+    }
+]
