@@ -18,7 +18,7 @@ const ChatsList = () => {
       <header>Basic Chat Interface</header>
       <SearchEntities />
       <div className="chats-container">
-        {state.chatsList?.map((chat) => (
+        {state.chatsList?.map(chat => (
           <ChatCard key={chat.id} {...chat} />
         ))}
       </div>

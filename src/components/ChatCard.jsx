@@ -13,7 +13,7 @@ const ChatCard = (chatObj) => {
   };
   return (
     <div className="chat-card" onClick={handleChatCardClick}>
-      <div>Image</div>
+      <div><img src={chatObj.img} alt={chatObj.name} height="100" width="100" /></div>
       <div>{chatObj.name}</div>
       <div>{chatObj.latestMessageTimeStamp}</div>
     </div>

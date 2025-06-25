@@ -19,22 +19,51 @@ const ChatInfo = () => {
       setNewMsg("");
     }
   };
+  const handleDeleteChat = () => {
+    dispatch({
+      type: "REMOVE_CHAT",
+    });
+  };
   return (
     <section className="chat-info-container">
       {state.chatInfo ? (
         <>
-          <header>{state.chatInfo.name}</header>
+          <header>
+            <img
+              src={state.chatInfo.img}
+              alt={state.chatInfo.name}
+              height="100"
+              width="100"
+            />
+            <div>{state.chatInfo.name}</div>
+            {state.chatInfo.id && <div onClick={handleDeleteChat}>Delete</div>}
+          </header>
           <div>
             {state.chatInfo.messages?.map((message, idx) => (
-              <MessageCard key={idx} {...message} />
+              <MessageCard
+                key={idx}
+                content={message.content}
+                timeStamp={message.timeStamp}
+                sentBy={
+                  message.userId === state.userSession.id
+                    ? "You"
+                    : message.sentBy
+                }
+                img={
+                  message.userId === state.userSession.id
+                    ? state.userSession.img
+                    : state.chatInfo.img
+                }
+              />
             ))}
           </div>
           <footer>
-            <textarea
+            <input
+              type="text"
               placeholder="Type a message"
               onChange={handleInputMessage}
               value={newMsg}
-            ></textarea>
+            ></input>
             <button onClick={handleSendMessage}>Send</button>
           </footer>
         </>

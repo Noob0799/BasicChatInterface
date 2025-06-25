@@ -1,6 +1,18 @@
 import chats from "../data/Chats.json";
+import users from "../data/Users.json";
+
+const modifyChatsList = (chatsList, chatInfo, isDelete) => {
+  const chatId = chatInfo.id;
+  const filteredChatList = chatsList.filter((chat) => chat.id !== chatId);
+  if(!isDelete) {
+    filteredChatList.unshift(chatInfo);
+  }
+  return filteredChatList;
+};
 
 const ChatReducer = (state, action) => {
+  let newChatsList = [];
+  const chatInfo = JSON.parse(JSON.stringify(state.chatInfo));
   switch (action.type) {
     case "GET_CHATS":
       const sortedChats = chats.sort(
@@ -16,19 +28,40 @@ const ChatReducer = (state, action) => {
         chatInfo: action.payload?.chatObj ? action.payload?.chatObj : null,
       };
     case "SEND_MESSAGE":
-      const chatInfo = JSON.parse(JSON.stringify(state.chatInfo));
+      const timeNow = new Date().getTime();
+      if (!chatInfo.hasOwnProperty("id")) {
+        chatInfo.id = timeNow;
+      }
+      chatInfo.latestMessageTimeStamp = timeNow;
       chatInfo.messages.push({
         content: action.payload.message,
         sentBy: "Sayantan Roy",
-        timeStamp: new Date().getTime(),
+        userId: state.userSession.id,
+        timeStamp: timeNow,
       });
+      newChatsList = modifyChatsList([...state.chatsList], chatInfo, false);
       return {
         ...state,
+        chatsList: newChatsList,
         chatInfo: chatInfo,
       };
+    case "SEARCH_ENTITY":
+      const searchStr = action.payload.searchStr;
+      let matchedUsers = [];
+      if (searchStr.length) {
+        matchedUsers = users.filter((user) => {
+          return user.name.toLowerCase().includes(searchStr.toLowerCase());
+        });
+      }
+      return { ...state, matchedUsers: matchedUsers };
     case "REMOVE_CHAT":
-      return {};
-    default:
+      newChatsList = modifyChatsList([...state.chatsList], chatInfo, true);
+      return {
+        ...state,
+        chatsList: newChatsList,
+        chatInfo: null
+      };
+    default:``
       return { ...state };
   }
 };
