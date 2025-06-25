@@ -33,12 +33,12 @@ const ChatInfo = () => {
               src={state.chatInfo.img}
               alt={state.chatInfo.name}
               height="100"
-              width="100"
+              width="100"`
             />
             <div>{state.chatInfo.name}</div>
             {state.chatInfo.id && <div onClick={handleDeleteChat}>Delete</div>}
           </header>
-          <div>
+          <main>
             {state.chatInfo.messages?.map((message, idx) => (
               <MessageCard
                 key={idx}
@@ -56,7 +56,7 @@ const ChatInfo = () => {
                 }
               />
             ))}
-          </div>
+          </main>
           <footer>
             <input
               type="text"

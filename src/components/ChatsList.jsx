@@ -17,11 +17,11 @@ const ChatsList = () => {
     <section className="chats-list-container">
       <header>Basic Chat Interface</header>
       <SearchEntities />
-      <div className="chats-container">
+      <main className="chats-container">
         {state.chatsList?.map(chat => (
           <ChatCard key={chat.id} {...chat} />
         ))}
-      </div>
+      </main>
     </section>
   );
 };

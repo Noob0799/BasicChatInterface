@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { ChatContext } from "../contexts/ChatContext";
+import { formatTimeStamp } from "../Utilities";
 
 const ChatCard = (chatObj) => {
   const { dispatch } = useContext(ChatContext);
@@ -15,7 +16,7 @@ const ChatCard = (chatObj) => {
     <div className="chat-card" onClick={handleChatCardClick}>
       <div><img src={chatObj.img} alt={chatObj.name} height="100" width="100" /></div>
       <div>{chatObj.name}</div>
-      <div>{chatObj.latestMessageTimeStamp}</div>
+      <div>{formatTimeStamp(chatObj.latestMessageTimeStamp)}</div>
     </div>
   );
 };
