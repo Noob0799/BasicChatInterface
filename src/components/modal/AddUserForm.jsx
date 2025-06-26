@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import {
   toggleAddNewUserModal,
@@ -6,17 +6,26 @@ import {
 } from "../../redux/slices/chatsSlice";
 
 const AddUserForm = () => {
-  const [userName, setUserName] = useState("");
+  const inputRef = useRef();
   const dispatch = useDispatch();
+  useEffect(() => {
+    inputRef.current.value = "";
+    inputRef.current.focus();
+  }, []);
   const handleUserNameInput = (e) => {
-    setUserName(e.target.value);
+    if (e.key === "Enter" || e.keyCode === 13) {
+      handleSaveModal();
+    } else {
+      inputRef.current.value = e.target.value;
+    }
   };
   const handleCancelModal = () => {
     dispatch(toggleAddNewUserModal());
   };
   const handleSaveModal = () => {
-    if (userName) {
-      dispatch(addNewUser({ name: userName }));
+    if (inputRef.current.value.length) {
+      dispatch(addNewUser({ name: inputRef.current.value }));
+      inputRef.current.value = "";
     }
   };
   return (
@@ -28,8 +37,9 @@ const AddUserForm = () => {
           type="text"
           className="user-name-input"
           placeholder="Enter new user name"
-          onChange={handleUserNameInput}
-          value={userName}
+          ref={inputRef}
+          onKeyUp={handleUserNameInput}
+          defaultValue=""
         />
       </main>
       <footer>

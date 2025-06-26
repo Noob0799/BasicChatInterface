@@ -10,6 +10,7 @@ const ChatInfo = () => {
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.value = "";
+      inputRef.current.focus();
     }
   }, [chatInfo?.entityId]);
   useEffect(() => {
@@ -20,6 +21,7 @@ const ChatInfo = () => {
         .getElementById(`message-card-${latestMessageId}`)
         .scrollIntoView();
     }
+    inputRef.current?.focus();
   }, [chatInfo?.messages]);
   const handleInputMessage = (e) => {
     if (e.key === "Enter" || e.keyCode === 13) {

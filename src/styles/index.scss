@@ -87,7 +87,7 @@
           @include mixins.image-container(30px, 30px, 50px);
         }
         .user-name {
-          @include mixins.ellipsis(40vh);
+          @include mixins.ellipsis(15vw);
         }
       }
     }
@@ -124,7 +124,7 @@
       .chat-name {
         flex-grow: 1;
         padding-left: 10px;
-        @include mixins.ellipsis(15vw);
+        @include mixins.ellipsis(10vw);
         @include mixins.font-style(1.2vw, bold);
       }
       .chat-time {
