@@ -44,7 +44,7 @@
         colors.$bgColor2
       );
       width: 100%;
-      padding: 0 10px;
+      padding: 5px 10px;
       border: 2px solid colors.$textColor1;
       border-bottom-left-radius: 10px;
       border-bottom-right-radius: 10px;
@@ -55,6 +55,12 @@
         border-bottom: 2px solid colors.$textColor1;
         &:last-child {
           border-bottom: none;
+        }
+        &:hover {
+          @include mixins.foreAndBackGroundColor(
+            colors.$bgColor2,
+            colors.$textColor1
+          );
         }
         cursor: pointer;
         .img-container {

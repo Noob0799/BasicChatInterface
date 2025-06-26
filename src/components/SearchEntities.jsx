@@ -18,7 +18,13 @@ const SearchEntities = () => {
     []
   );
   useEffect(() => {
-    debouncedSearch(searchStr);
+    if (searchStr) {
+      debouncedSearch(searchStr);
+    } else {
+      dispatch({
+        type: "CLEAR_SEARCH_SUGGESTIONS",
+      });
+    }
     return () => {
       debouncedSearch.cancel();
     };
@@ -28,6 +34,9 @@ const SearchEntities = () => {
   };
   const handleClearSearch = () => {
     setSearchStr("");
+    dispatch({
+      type: "CLEAR_SEARCH_SUGGESTIONS",
+    });
   };
   return (
     <>

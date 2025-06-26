@@ -63,6 +63,8 @@ const ChatReducer = (state, action) => {
         });
       }
       return { ...state, matchedUsers: matchedUsers };
+    case "CLEAR_SEARCH_SUGGESTIONS":
+      return { ...state, matchedUsers: [] };
     case "REMOVE_CHAT":
       newChatsList = modifyChatsList([...state.chatsList], chatInfo, true);
       return {
