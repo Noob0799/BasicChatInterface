@@ -12,9 +12,11 @@ const ChatInfo = () => {
   }, [state.chatInfo?.entityId]);
   useEffect(() => {
     const messsagesList = state.chatInfo?.messages;
-    if (messsagesList.length) {
+    if (messsagesList?.length) {
       const latestMessageId = messsagesList[messsagesList.length - 1].id;
-      document.getElementById(`message-card-${latestMessageId}`).scrollIntoView();
+      document
+        .getElementById(`message-card-${latestMessageId}`)
+        .scrollIntoView();
     }
   }, [state.chatInfo?.messages]);
   const handleInputMessage = (e) => {
@@ -55,9 +57,9 @@ const ChatInfo = () => {
             </div>
             <div className="chat-name">{state.chatInfo.name}</div>
             {state.chatInfo.id && (
-              <div className="delete-chat-btn" onClick={handleDeleteChat}>
-                <span>Delete</span>
-              </div>
+              <button className="delete-chat-btn" onClick={handleDeleteChat}>
+                Delete
+              </button>
             )}
           </header>
           <main>
