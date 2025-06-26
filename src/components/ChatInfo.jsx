@@ -55,7 +55,10 @@ const ChatInfo = () => {
                 width="100"
               />
             </div>
-            <div className="chat-name">{state.chatInfo.name}</div>
+            <div className="chat-name">
+              {state.chatInfo.name}{" "}
+              {state.userSession.id === state.chatInfo.entityId ? " (You)" : ""}
+            </div>
             {state.chatInfo.id && (
               <button className="delete-chat-btn" onClick={handleDeleteChat}>
                 Delete

@@ -1,3 +1,5 @@
+@use "colors";
+
 @mixin flex-box($direction, $justify, $align, $gap) {
   display: flex;
   flex-direction: $direction;
@@ -46,9 +48,9 @@
 }
 
 @mixin search-box {
-  @include foreAndBackGroundColor(brown, beige);
+  @include foreAndBackGroundColor(colors.$textColor1, colors.$bgColor2);
   padding-top: 2px;
   padding-bottom: 2px;
-  border: 2px solid brown;
+  border: 2px solid colors.$textColor1;
   border-radius: 10px;
 }
