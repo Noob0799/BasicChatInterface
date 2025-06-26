@@ -10,6 +10,13 @@ const ChatInfo = () => {
       inputRef.current.value = "";
     }
   }, [state.chatInfo?.entityId]);
+  useEffect(() => {
+    const messsagesList = state.chatInfo?.messages;
+    if (messsagesList.length) {
+      const latestMessageId = messsagesList[messsagesList.length - 1].id;
+      document.getElementById(`message-card-${latestMessageId}`).scrollIntoView();
+    }
+  }, [state.chatInfo?.messages]);
   const handleInputMessage = (e) => {
     if (e.key === "Enter" || e.keyCode === 13) {
       handleSendMessage();
@@ -54,9 +61,10 @@ const ChatInfo = () => {
             )}
           </header>
           <main>
-            {state.chatInfo.messages?.map((message, idx) => (
+            {state.chatInfo.messages?.map((message) => (
               <MessageCard
-                key={idx}
+                key={message.id}
+                messageId={message.id}
                 content={message.content}
                 timeStamp={message.timeStamp}
                 sentBy={

@@ -42,6 +42,7 @@ const ChatReducer = (state, action) => {
       }
       chatInfo.latestMessageTimeStamp = timeNow;
       chatInfo.messages.push({
+        id: timeNow,
         content: action.payload.message,
         sentBy: "Sayantan Roy",
         userId: state.userSession.id,

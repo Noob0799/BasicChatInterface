@@ -2,10 +2,11 @@ import { useContext } from "react";
 import { ChatContext } from "../contexts/ChatContext";
 import { formatTimeStampForDate, formatTimeStampForTime } from "../Utilities";
 
-const MessageCard = ({ content, sentBy, userId, timeStamp, img }) => {
+const MessageCard = ({ messageId, content, sentBy, userId, timeStamp, img }) => {
   const { state } = useContext(ChatContext);
   return (
     <div
+      id={`message-card-${messageId}`}
       className="message-card"
       style={{
         alignSelf: userId === state.userSession.id ? "flex-end" : "flex-start",
