@@ -1,22 +1,31 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import { ChatContext } from "../contexts/ChatContext";
 import MessageCard from "./MessageCard";
 
 const ChatInfo = () => {
   const { state, dispatch } = useContext(ChatContext);
-  const [newMsg, setNewMsg] = useState("");
+  const inputRef = useRef();
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
+  }, [state.chatInfo?.entityId]);
   const handleInputMessage = (e) => {
-    setNewMsg(e.target.value);
+    if (e.key === "Enter" || e.keyCode === 13) {
+      handleSendMessage();
+    } else {
+      inputRef.current.value = e.target.value;
+    }
   };
   const handleSendMessage = () => {
-    if (newMsg.length) {
+    if (inputRef.current.value.length) {
       dispatch({
         type: "SEND_MESSAGE",
         payload: {
-          message: newMsg,
+          message: inputRef.current.value,
         },
       });
-      setNewMsg("");
+      inputRef.current.value = "";
     }
   };
   const handleDeleteChat = () => {
@@ -29,14 +38,20 @@ const ChatInfo = () => {
       {state.chatInfo ? (
         <>
           <header>
-            <img
-              src={state.chatInfo.img}
-              alt={state.chatInfo.name}
-              height="100"
-              width="100"`
-            />
-            <div>{state.chatInfo.name}</div>
-            {state.chatInfo.id && <div onClick={handleDeleteChat}>Delete</div>}
+            <div className="img-container">
+              <img
+                src={state.chatInfo.img}
+                alt={state.chatInfo.name}
+                height="100"
+                width="100"
+              />
+            </div>
+            <div className="chat-name">{state.chatInfo.name}</div>
+            {state.chatInfo.id && (
+              <div className="delete-chat-btn" onClick={handleDeleteChat}>
+                <span>Delete</span>
+              </div>
+            )}
           </header>
           <main>
             {state.chatInfo.messages?.map((message, idx) => (
@@ -49,6 +64,7 @@ const ChatInfo = () => {
                     ? "You"
                     : message.sentBy
                 }
+                userId={message.userId}
                 img={
                   message.userId === state.userSession.id
                     ? state.userSession.img
@@ -61,14 +77,17 @@ const ChatInfo = () => {
             <input
               type="text"
               placeholder="Type a message"
-              onChange={handleInputMessage}
-              value={newMsg}
+              ref={inputRef}
+              onKeyUp={handleInputMessage}
+              defaultValue=""
             ></input>
             <button onClick={handleSendMessage}>Send</button>
           </footer>
         </>
       ) : (
-        <div>Click on a chat to see your recent messages</div>
+        <div className="chat-info-fallback-container">
+          <div>Click on a chat to see your recent messages</div>
+        </div>
       )}
     </section>
   );

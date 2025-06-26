@@ -18,18 +18,28 @@ const SearchEntities = () => {
   };
   const handleClearSearch = () => {
     setSearchStr("");
-  }
+  };
   return (
     <>
       <div className="search-container">
-        <div className="search-box">
-          <input type="text" onChange={handleSearchKey} value={searchStr} />
-        </div>
-        <div className="search-results">
-          {state.matchedUsers?.map((user) => (
-            <UserCard key={user.id} {...user} clearSearch={handleClearSearch} />
-          ))}
-        </div>
+        <input
+          type="text"
+          className="search-box"
+          placeholder="Search or start a new chat"
+          onChange={handleSearchKey}
+          value={searchStr}
+        />
+        {state.matchedUsers?.length ? (
+          <div className="search-results">
+            {state.matchedUsers?.map((user) => (
+              <UserCard
+                key={user.id}
+                {...user}
+                clearSearch={handleClearSearch}
+              />
+            ))}
+          </div>
+        ) : null}
       </div>
     </>
   );

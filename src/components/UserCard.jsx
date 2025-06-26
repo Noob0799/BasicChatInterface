@@ -15,14 +15,15 @@ const UserCard = ({ id, name, img, clearSearch }) => {
           latestMessageTimeStamp: "",
           messages: [],
         },
+        source: "SEARCH"
       },
     });
     clearSearch();
   };
   return (
     <div className="user-card-container" onClick={handleUserClick}>
-      <div>
-        <img src={img} alt={name} height="100" width="100" />
+      <div className="img-container">
+        <img src={img} alt={name} />
       </div>
       <div>
         {name} {id === state.userSession.id ? "(You)" : ""}

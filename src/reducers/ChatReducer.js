@@ -4,7 +4,7 @@ import users from "../data/Users.json";
 const modifyChatsList = (chatsList, chatInfo, isDelete) => {
   const chatId = chatInfo.id;
   const filteredChatList = chatsList.filter((chat) => chat.id !== chatId);
-  if(!isDelete) {
+  if (!isDelete) {
     filteredChatList.unshift(chatInfo);
   }
   return filteredChatList;
@@ -23,9 +23,17 @@ const ChatReducer = (state, action) => {
         chatsList: sortedChats,
       };
     case "SHOW_CHAT_INFO":
+      let chatObj = action.payload.chatObj,
+        tempObj;
+      if (action.payload.source === "SEARCH") {
+        tempObj = state.chatsList.find(
+          (chat) => chat.entityId === chatObj.entityId
+        );
+        chatObj = tempObj ? tempObj : chatObj;
+      }
       return {
         ...state,
-        chatInfo: action.payload?.chatObj ? action.payload?.chatObj : null,
+        chatInfo: chatObj,
       };
     case "SEND_MESSAGE":
       const timeNow = new Date().getTime();
@@ -59,9 +67,10 @@ const ChatReducer = (state, action) => {
       return {
         ...state,
         chatsList: newChatsList,
-        chatInfo: null
+        chatInfo: null,
       };
-    default:``
+    default:
+      ``;
       return { ...state };
   }
 };

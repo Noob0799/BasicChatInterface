@@ -1,22 +1,33 @@
 import { useContext } from "react";
 import { ChatContext } from "../contexts/ChatContext";
-import { formatTimeStamp } from "../Utilities";
+import { formatTimeStampForDate, formatTimeStampForTime } from "../Utilities";
 
 const ChatCard = (chatObj) => {
-  const { dispatch } = useContext(ChatContext);
+  const { state, dispatch } = useContext(ChatContext);
   const handleChatCardClick = () => {
     dispatch({
       type: "SHOW_CHAT_INFO",
       payload: {
         chatObj: chatObj,
       },
+      source: "CHAT",
     });
   };
   return (
-    <div className="chat-card" onClick={handleChatCardClick}>
-      <div><img src={chatObj.img} alt={chatObj.name} height="100" width="100" /></div>
-      <div>{chatObj.name}</div>
-      <div>{formatTimeStamp(chatObj.latestMessageTimeStamp)}</div>
+    <div
+      className={`chat-card ${
+        state.chatInfo?.id === chatObj.id ? "selected" : ""
+      }`}
+      onClick={handleChatCardClick}
+    >
+      <div className="img-container">
+        <img src={chatObj.img} alt={chatObj.name} />
+      </div>
+      <div className="chat-name">{chatObj.name}</div>
+      <div className="chat-time">
+        <div>{formatTimeStampForTime(chatObj.latestMessageTimeStamp)}</div>
+        <div>{formatTimeStampForDate(chatObj.latestMessageTimeStamp)}</div>
+      </div>
     </div>
   );
 };
