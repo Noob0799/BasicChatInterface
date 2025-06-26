@@ -1,5 +1,5 @@
 # Basic Chat Interface  
-This is a webapp developed using React and Context API. It provides a basic chat interface, where you can see existing users who have already texted you, find existing users to text, add new users to text and delete existing user chats.  
+This is a webapp developed using React and Redux Toolkit. It provides a basic chat interface, where you can see existing users who have already texted you, find existing users to text, add new users to text and delete existing user chats.  
 ### Live webapp link: https://noob-chat-interface.netlify.app/  
 
 ## Assumptions:
