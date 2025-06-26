@@ -1,18 +1,28 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useCallback } from "react";
 import { ChatContext } from "../contexts/ChatContext";
 import UserCard from "./UserCard";
+import debounce from "lodash/debounce";
 
 const SearchEntities = () => {
   const [searchStr, setSearchStr] = useState("");
   const { state, dispatch } = useContext(ChatContext);
+  const debouncedSearch = useCallback(
+    debounce((query) => {
+      dispatch({
+        type: "SEARCH_ENTITY",
+        payload: {
+          searchStr: query,
+        },
+      });
+    }, 500),
+    []
+  );
   useEffect(() => {
-    dispatch({
-      type: "SEARCH_ENTITY",
-      payload: {
-        searchStr: searchStr,
-      },
-    });
-  }, [searchStr]);
+    debouncedSearch(searchStr);
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [searchStr, debouncedSearch]);
   const handleSearchKey = (e) => {
     setSearchStr(e.target.value);
   };
