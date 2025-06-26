@@ -1,12 +1,12 @@
-import { useContext } from "react";
-import { ChatContext } from "../contexts/ChatContext";
+import { useDispatch, useSelector } from "react-redux";
+import { showChatInfo } from "../redux/slices/chatsSlice";
 
 const UserCard = ({ id, name, img, clearSearch }) => {
-  const { state, dispatch } = useContext(ChatContext);
+  const dispatch = useDispatch();
+  const { userSession } = useSelector((state) => state.chats);
   const handleUserClick = () => {
-    dispatch({
-      type: "SHOW_CHAT_INFO",
-      payload: {
+    dispatch(
+      showChatInfo({
         chatObj: {
           entityId: id,
           entityType: "USER",
@@ -15,9 +15,9 @@ const UserCard = ({ id, name, img, clearSearch }) => {
           latestMessageTimeStamp: "",
           messages: [],
         },
-        source: "SEARCH"
-      },
-    });
+        source: "SEARCH",
+      })
+    );
     clearSearch();
   };
   return (
@@ -26,7 +26,7 @@ const UserCard = ({ id, name, img, clearSearch }) => {
         <img src={img} alt={name} />
       </div>
       <div className="user-name">
-        {name} {id === state.userSession.id ? "(You)" : ""}
+        {name} {id === userSession.id ? "(You)" : ""}
       </div>
     </div>
   );

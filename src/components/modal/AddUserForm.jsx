@@ -1,25 +1,22 @@
-import { useContext, useState } from "react";
-import { ChatContext } from "../../contexts/ChatContext";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import {
+  toggleAddNewUserModal,
+  addNewUser,
+} from "../../redux/slices/chatsSlice";
 
 const AddUserForm = () => {
   const [userName, setUserName] = useState("");
-  const { dispatch } = useContext(ChatContext);
+  const dispatch = useDispatch();
   const handleUserNameInput = (e) => {
     setUserName(e.target.value);
   };
   const handleCancelModal = () => {
-    dispatch({
-      type: "TOGGLE_ADD_NEW_USER_MODAL",
-    });
+    dispatch(toggleAddNewUserModal());
   };
   const handleSaveModal = () => {
     if (userName) {
-      dispatch({
-        type: "ADD_NEW_USER",
-        payload: {
-          userName: userName,
-        },
-      });
+      dispatch(addNewUser({ name: userName }));
     }
   };
   return (

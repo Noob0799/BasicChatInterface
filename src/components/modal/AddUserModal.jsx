@@ -1,17 +1,16 @@
-import { useContext } from "react";
 import ReactDOM from "react-dom";
-import { ChatContext } from "../../contexts/ChatContext";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleAddNewUserModal } from "../../redux/slices/chatsSlice";
 
 const AddUserModal = ({ children }) => {
-  const { state, dispatch } = useContext(ChatContext);
+  const dispatch = useDispatch();
+  const { isAddUserModalOpen } = useSelector((state) => state.chats);
   const handleOutsideModalClick = (e) => {
     if (e.target.classList.contains("add-user-modal-container")) {
-      dispatch({
-        type: "TOGGLE_ADD_NEW_USER_MODAL",
-      });
+      dispatch(toggleAddNewUserModal());
     }
   };
-  if (!state.isAddUserModalOpen) return null;
+  if (!isAddUserModalOpen) return null;
   return ReactDOM.createPortal(
     <div className="add-user-modal-container" onClick={handleOutsideModalClick}>
       {children}

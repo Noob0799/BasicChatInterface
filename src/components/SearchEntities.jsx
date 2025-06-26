@@ -1,19 +1,20 @@
-import { useEffect, useState, useContext, useCallback } from "react";
-import { ChatContext } from "../contexts/ChatContext";
+import { useEffect, useState, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  searchEntity,
+  clearSearchSuggestions,
+  toggleAddNewUserModal,
+} from "../redux/slices/chatsSlice";
 import UserCard from "./UserCard";
 import debounce from "lodash/debounce";
 
 const SearchEntities = () => {
   const [searchStr, setSearchStr] = useState("");
-  const { state, dispatch } = useContext(ChatContext);
+  const dispatch = useDispatch();
+  const { matchedUsers } = useSelector((state) => state.chats);
   const debouncedSearch = useCallback(
     debounce((query) => {
-      dispatch({
-        type: "SEARCH_ENTITY",
-        payload: {
-          searchStr: query,
-        },
-      });
+      dispatch(searchEntity({ query: query }));
     }, 500),
     []
   );
@@ -21,9 +22,7 @@ const SearchEntities = () => {
     if (searchStr) {
       debouncedSearch(searchStr);
     } else {
-      dispatch({
-        type: "CLEAR_SEARCH_SUGGESTIONS",
-      });
+      dispatch(clearSearchSuggestions());
     }
     return () => {
       debouncedSearch.cancel();
@@ -34,15 +33,11 @@ const SearchEntities = () => {
   };
   const handleClearSearch = () => {
     setSearchStr("");
-    dispatch({
-      type: "CLEAR_SEARCH_SUGGESTIONS",
-    });
+    dispatch(clearSearchSuggestions());
   };
   const handleAddNewUser = () => {
-    dispatch({
-      type: "TOGGLE_ADD_NEW_USER_MODAL",
-    });
-  }
+    dispatch(toggleAddNewUserModal());
+  };
   return (
     <>
       <div className="search-container">
@@ -54,12 +49,14 @@ const SearchEntities = () => {
             onChange={handleSearchKey}
             value={searchStr}
           />
-          <button className="add-user-btn" onClick={handleAddNewUser}>Add</button>
+          <button className="add-user-btn" onClick={handleAddNewUser}>
+            Add
+          </button>
         </div>
 
-        {state.matchedUsers?.length ? (
+        {matchedUsers?.length ? (
           <div className="search-results">
-            {state.matchedUsers?.map((user) => (
+            {matchedUsers?.map((user) => (
               <UserCard
                 key={user.id}
                 {...user}

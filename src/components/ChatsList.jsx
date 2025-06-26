@@ -1,24 +1,24 @@
-import { useEffect, useContext } from "react";
-import { ChatContext } from "../contexts/ChatContext";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getChats } from "../redux/slices/chatsSlice";
 import SearchEntities from "./SearchEntities";
 import ChatCard from "./ChatCard.jsx";
 
 const ChatsList = () => {
-  const { state, dispatch } = useContext(ChatContext);
+  const dispatch = useDispatch();
+  const { chatsList } = useSelector((state) => state.chats);
   useEffect(() => {
     fetchChats();
   }, []);
   const fetchChats = () => {
-    dispatch({
-      type: "GET_CHATS",
-    });
+    dispatch(getChats());
   };
   return (
     <section className="chats-list-container">
       <header>Basic Chat Interface</header>
       <SearchEntities />
       <main className="chats-container">
-        {state.chatsList?.map(chat => (
+        {chatsList?.map((chat) => (
           <ChatCard key={chat.id} {...chat} />
         ))}
       </main>

@@ -1,24 +1,26 @@
-import { useState, useContext, useEffect, useRef } from "react";
-import { ChatContext } from "../contexts/ChatContext";
+import { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { removeChat, sendMessage } from "../redux/slices/chatsSlice";
 import MessageCard from "./MessageCard";
 
 const ChatInfo = () => {
-  const { state, dispatch } = useContext(ChatContext);
+  const dispatch = useDispatch();
+  const { chatInfo, userSession } = useSelector((state) => state.chats);
   const inputRef = useRef();
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.value = "";
     }
-  }, [state.chatInfo?.entityId]);
+  }, [chatInfo?.entityId]);
   useEffect(() => {
-    const messsagesList = state.chatInfo?.messages;
+    const messsagesList = chatInfo?.messages;
     if (messsagesList?.length) {
       const latestMessageId = messsagesList[messsagesList.length - 1].id;
       document
         .getElementById(`message-card-${latestMessageId}`)
         .scrollIntoView();
     }
-  }, [state.chatInfo?.messages]);
+  }, [chatInfo?.messages]);
   const handleInputMessage = (e) => {
     if (e.key === "Enter" || e.keyCode === 13) {
       handleSendMessage();
@@ -28,60 +30,51 @@ const ChatInfo = () => {
   };
   const handleSendMessage = () => {
     if (inputRef.current.value.length) {
-      dispatch({
-        type: "SEND_MESSAGE",
-        payload: {
-          message: inputRef.current.value,
-        },
-      });
+      dispatch(sendMessage({ message: inputRef.current.value }));
       inputRef.current.value = "";
     }
   };
   const handleDeleteChat = () => {
-    dispatch({
-      type: "REMOVE_CHAT",
-    });
+    dispatch(removeChat());
   };
   return (
     <section className="chat-info-container">
-      {state.chatInfo ? (
+      {chatInfo ? (
         <>
           <header>
             <div className="img-container">
               <img
-                src={state.chatInfo.img}
-                alt={state.chatInfo.name}
+                src={chatInfo.img}
+                alt={chatInfo.name}
                 height="100"
                 width="100"
               />
             </div>
             <div className="chat-name">
-              {state.chatInfo.name}{" "}
-              {state.userSession.id === state.chatInfo.entityId ? " (You)" : ""}
+              {chatInfo.name}{" "}
+              {userSession.id === chatInfo.entityId ? " (You)" : ""}
             </div>
-            {state.chatInfo.id && (
+            {chatInfo.id && (
               <div className="delete-chat-btn-container">
                 <button onClick={handleDeleteChat}>Delete</button>
               </div>
             )}
           </header>
           <main>
-            {state.chatInfo.messages?.map((message) => (
+            {chatInfo.messages?.map((message) => (
               <MessageCard
                 key={message.id}
                 messageId={message.id}
                 content={message.content}
                 timeStamp={message.timeStamp}
                 sentBy={
-                  message.userId === state.userSession.id
-                    ? "You"
-                    : message.sentBy
+                  message.userId === userSession.id ? "You" : message.sentBy
                 }
                 userId={message.userId}
                 img={
-                  message.userId === state.userSession.id
-                    ? state.userSession.img
-                    : state.chatInfo.img
+                  message.userId === userSession.id
+                    ? userSession.img
+                    : chatInfo.img
                 }
               />
             ))}

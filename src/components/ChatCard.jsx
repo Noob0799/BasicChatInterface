@@ -1,23 +1,16 @@
-import { useContext } from "react";
-import { ChatContext } from "../contexts/ChatContext";
+import { useDispatch, useSelector } from "react-redux";
+import { showChatInfo } from "../redux/slices/chatsSlice";
 import { formatTimeStampForDate, formatTimeStampForTime } from "../Utilities";
 
 const ChatCard = (chatObj) => {
-  const { state, dispatch } = useContext(ChatContext);
+  const dispatch = useDispatch();
+  const { chatInfo } = useSelector((state) => state.chats);
   const handleChatCardClick = () => {
-    dispatch({
-      type: "SHOW_CHAT_INFO",
-      payload: {
-        chatObj: chatObj,
-      },
-      source: "CHAT",
-    });
+    dispatch(showChatInfo({chatObj: chatObj, source: "CHAT"}));
   };
   return (
     <div
-      className={`chat-card ${
-        state.chatInfo?.id === chatObj.id ? "selected" : ""
-      }`}
+      className={`chat-card ${chatInfo?.id === chatObj.id ? "selected" : ""}`}
       onClick={handleChatCardClick}
     >
       <div className="img-container">
