@@ -25,7 +25,7 @@ const UserCard = ({ id, name, img, clearSearch }) => {
       <div className="img-container">
         <img src={img} alt={name} />
       </div>
-      <div>
+      <div className="user-name">
         {name} {id === state.userSession.id ? "(You)" : ""}
       </div>
     </div>

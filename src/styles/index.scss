@@ -19,7 +19,7 @@
   background-color: colors.$bgColor1;
   header {
     @include mixins.flex-box(column, center, flex-start, 0);
-    @include mixins.absolutePosition(0, auto, 0);
+    @include mixins.absolutePosition(0, auto, 0, 1000);
     @include mixins.dimensions(100%, 50px, 10px);
     @include mixins.foreAndBackGroundColor(
       colors.$textColor1,
@@ -28,13 +28,33 @@
     @include mixins.font-style(2vw, bold);
   }
   .search-container {
-    @include mixins.absolutePosition(50px, auto, 0);
+    @include mixins.absolutePosition(50px, auto, 0, 1000);
     @include mixins.dimensions(100%, 30px, 10px);
-    .search-box {
-      @include mixins.search-box;
-      @include mixins.dimensions(100%, 30px, 10px);
-      &:focus {
-        outline: none;
+    .search-box-container {
+      @include mixins.flex-box(row, space-between, center, 0);
+      .search-box {
+        @include mixins.search-box;
+        @include mixins.dimensions(100%, 30px, 10px);
+        border-right: none;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        &:focus {
+          outline: none;
+        }
+      }
+      .add-user-btn {
+        @include mixins.foreAndBackGroundColor(
+          colors.$bgColor1,
+          colors.$textColor1
+        );
+        @include mixins.font-style(0.9vw, bold);
+        height: 30px;
+        padding: 0 10px;
+        border: none;
+        border-radius: 5px;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        cursor: pointer;
       }
     }
     .search-results {
@@ -66,12 +86,15 @@
         .img-container {
           @include mixins.image-container(30px, 30px, 50px);
         }
+        .user-name {
+          @include mixins.ellipsis(40vh);
+        }
       }
     }
   }
   .chats-container {
     @include mixins.flex-box(column, flex-start, center, 10px);
-    @include mixins.overflow(calc(100vh - 120px), auto);
+    @include mixins.overflowY(calc(100vh - 120px), auto);
     margin-top: 120px;
     width: 100%;
     padding: 10px;
@@ -101,11 +124,13 @@
       .chat-name {
         flex-grow: 1;
         padding-left: 10px;
+        @include mixins.ellipsis(15vw);
+        @include mixins.font-style(1.2vw, bold);
       }
       .chat-time {
         min-width: 80px;
         @include mixins.flex-box(column, center, flex-end, 0);
-        @include mixins.font-style(12px, bold);
+        @include mixins.font-style(0.8vw, bold);
       }
     }
   }
@@ -116,35 +141,38 @@
   background-color: colors.$bgColor2;
   header {
     @include mixins.flex-box(row, flex-start, center, 10px);
-    @include mixins.absolutePosition(0, auto, 0);
+    @include mixins.absolutePosition(0, auto, 0, 1000);
     @include mixins.dimensions(100%, 50px, 10px);
     @include mixins.foreAndBackGroundColor(
       colors.$textColor1,
       colors.$bgColor1
     );
-    @include mixins.font-style(2vw, bold);
-    font-size: 1.5vw;
+    @include mixins.font-style(1.5vw, bold);
     .img-container {
       @include mixins.image-container(40px, 40px, 50px);
     }
     .chat-name {
       flex-grow: 1;
+      @include mixins.ellipsis(80%);
     }
-    .delete-chat-btn {
-      @include mixins.foreAndBackGroundColor(
-        colors.$bgColor1,
-        colors.$textColor1
-      );
-      @include mixins.font-style(1.2vw, bold);
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
+    .delete-chat-btn-container {
+      flex-grow: 1;
       text-align: right;
-      cursor: pointer;
+      button {
+        @include mixins.foreAndBackGroundColor(
+          colors.$bgColor1,
+          colors.$textColor1
+        );
+        @include mixins.font-style(1.2vw, bold);
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
     }
   }
   main {
-    @include mixins.overflow(calc(100vh - 100px), auto);
+    @include mixins.overflowY(calc(100vh - 100px), auto);
     @include mixins.flex-box(column, flex-start, flex-end, 20px);
     margin-top: 50px;
     padding: 10px 20px 0;
@@ -158,16 +186,19 @@
       border-radius: 10px;
       .user-info {
         @include mixins.flex-box(row, space-between, center, 0);
-        @include mixins.font-style(16px, bold);
+        @include mixins.font-style(1.2vw, bold);
         width: 100%;
+        .message-sender {
+          @include mixins.ellipsis(15vw);
+        }
         .message-time {
           @include mixins.flex-box(column, flex-start, flex-end, 0);
-          @include mixins.font-style(12px, bold);
+          @include mixins.font-style(0.8vw, bold);
           min-width: 80px;
         }
       }
       .message-content {
-        font-size: 16px;
+        font-size: 1vw;
         max-width: 40vw;
         overflow-x: hidden;
         word-wrap: break-word;
@@ -175,7 +206,7 @@
     }
   }
   footer {
-    @include mixins.absolutePosition(auto, 0, 0);
+    @include mixins.absolutePosition(auto, 0, 0, 1000);
     @include mixins.dimensions(100%, 50px, 10px);
     @include mixins.flex-box(row, center, center, 0);
     background-color: colors.$bgColor1;
@@ -194,6 +225,7 @@
         colors.$bgColor1,
         colors.$textColor1
       );
+      @include mixins.font-style(1vw, bold);
       border: none;
       border-top-right-radius: 10px;
       border-bottom-right-radius: 10px;
@@ -206,10 +238,73 @@
 
 .chat-info-fallback-container {
   @include mixins.flex-box(column, center, center, 0);
-  @include mixins.font-style(5vh, bold);
+  @include mixins.font-style(2vw, bold);
   @include mixins.dimensions(100%, 100vh, 20px);
   color: colors.$textColor1;
   div {
     text-align: center;
+  }
+}
+
+.add-user-modal-container {
+  @include mixins.absolutePosition(0, auto, 0, 2000);
+  @include mixins.dimensions(100%, 100%, 0);
+  @include mixins.flex-box(column, center, center, 0);
+  .add-user-modal-body {
+    position: relative;
+    @include mixins.dimensions(40vw, 40vh, 0);
+    @include mixins.foreAndBackGroundColor(
+      colors.$textColor1,
+      colors.$bgColor1
+    );
+    border: 5px solid colors.$textColor1;
+    border-radius: 10px;
+    header {
+      @include mixins.absolutePosition(0, auto, 0, 2000);
+      @include mixins.flex-box(column, center, flex-start, 0);
+      @include mixins.dimensions(100%, 10vh, 10px);
+      @include mixins.foreAndBackGroundColor(
+        colors.$bgColor2,
+        colors.$textColor1
+      );
+      @include mixins.font-style(1.5vw, bold);
+    }
+    main {
+      margin-top: 10vh;
+      @include mixins.dimensions(100%, 20vh, 0);
+      @include mixins.flex-box(row, center, center, 20px);
+      label {
+        @include mixins.font-style(1.2vw, bold);
+      }
+      .user-name-input {
+        @include mixins.search-box;
+        @include mixins.dimensions(50%, 30px, 10px);
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+    footer {
+      @include mixins.absolutePosition(auto, 0, 0, 2000);
+      @include mixins.dimensions(100%, 10vh, 10px);
+      @include mixins.foreAndBackGroundColor(
+        colors.$bgColor2,
+        colors.$textColor1
+      );
+      @include mixins.font-style(1.5vw, bold);
+      @include mixins.flex-box(row, flex-end, center, 20px);
+      button {
+        @include mixins.foreAndBackGroundColor(
+          colors.$textColor1,
+          colors.$bgColor2
+        );
+        @include mixins.font-style(1vw, bold);
+        height: 30px;
+        padding: 0 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    }
   }
 }

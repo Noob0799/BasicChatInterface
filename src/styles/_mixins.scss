@@ -8,11 +8,12 @@
   gap: $gap;
 }
 
-@mixin absolutePosition($top, $bottom, $left) {
+@mixin absolutePosition($top, $bottom, $left, $zIndex) {
   position: absolute;
   top: $top;
   bottom: $bottom;
   left: $left;
+  z-index: $zIndex;
 }
 
 @mixin dimensions($width, $height, $padding) {
@@ -42,7 +43,7 @@
   background-color: $bgColor;
 }
 
-@mixin overflow($maxHeight, $overflowY) {
+@mixin overflowY($maxHeight, $overflowY) {
   max-height: $maxHeight;
   overflow-y: $overflowY;
 }
@@ -53,4 +54,11 @@
   padding-bottom: 2px;
   border: 2px solid colors.$textColor1;
   border-radius: 10px;
+}
+
+@mixin ellipsis($maxWidth) {
+  max-width: $maxWidth;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

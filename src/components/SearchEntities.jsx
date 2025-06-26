@@ -38,16 +38,25 @@ const SearchEntities = () => {
       type: "CLEAR_SEARCH_SUGGESTIONS",
     });
   };
+  const handleAddNewUser = () => {
+    dispatch({
+      type: "TOGGLE_ADD_NEW_USER_MODAL",
+    });
+  }
   return (
     <>
       <div className="search-container">
-        <input
-          type="text"
-          className="search-box"
-          placeholder="Search or start a new chat"
-          onChange={handleSearchKey}
-          value={searchStr}
-        />
+        <div className="search-box-container">
+          <input
+            type="text"
+            className="search-box"
+            placeholder="Search for a contact to start a chat"
+            onChange={handleSearchKey}
+            value={searchStr}
+          />
+          <button className="add-user-btn" onClick={handleAddNewUser}>Add</button>
+        </div>
+
         {state.matchedUsers?.length ? (
           <div className="search-results">
             {state.matchedUsers?.map((user) => (

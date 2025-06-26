@@ -13,7 +13,7 @@ const MessageCard = ({ messageId, content, sentBy, userId, timeStamp, img }) => 
       }}
     >
       <div className="user-info">
-        <div>{sentBy}</div>
+        <div className="message-sender">{sentBy}</div>
         <div className="message-time">
           <div>{formatTimeStampForTime(timeStamp)}</div>
           <div>{formatTimeStampForDate(timeStamp)}</div>

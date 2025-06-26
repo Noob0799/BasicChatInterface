@@ -60,9 +60,9 @@ const ChatInfo = () => {
               {state.userSession.id === state.chatInfo.entityId ? " (You)" : ""}
             </div>
             {state.chatInfo.id && (
-              <button className="delete-chat-btn" onClick={handleDeleteChat}>
-                Delete
-              </button>
+              <div className="delete-chat-btn-container">
+                <button onClick={handleDeleteChat}>Delete</button>
+              </div>
             )}
           </header>
           <main>
